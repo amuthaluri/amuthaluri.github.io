@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Terminal Header */
+        .terminal-header {
+            background: #1a1f3a;
+            border-bottom: 3px solid #00ff41;
+            padding: 40px 0;
+        }
+
+        .terminal-window {
+            background: #0d1117;
+            border: 2px solid #30363d;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .terminal-bar {
+            background: #161b22;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .terminal-content {
+            padding: 30px;
+            font-size: 1.1rem;
+        }
+
+        .prompt {
+            color: #00ff41;
+            margin-right: 10px;
+        }
+
+        .command {
+            color: #58a6ff;
+        }
+
+        .output {
+            color: #e0e0e0;
+            margin: 10px 0;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: #00ff41;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .tagline {
+            color: #58a6ff;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* Skills Matrix */
+        .skills-section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            color: #00ff41;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            border-left: 5px solid #00ff41;
+            padding-left: 20px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .skill-card {
+            background: linear-gradient(145deg, #1a1f3a, #0d1117);
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00ff41, transparent);
+            transition: 0.5s;
+        }
+
+        .skill-card:hover::before {
+            left: 100%;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ff41;
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .skill-card h3 {
+            color: #58a6ff;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .skill-card p {
+            color: #8b949e;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .skill-items {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid #58a6ff;
+            color: #58a6ff;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+
+        /* Projects Showcase */
+        .projects-section {
+            margin: 60px 0;
+        }
+
+        .project-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #00ff41;
+            transition: width 0.3s;
+        }
+
+        .project-card:hover::after {
+            width: 100%;
+        }
+
+        .project-card:hover {
+            border-color: #00ff41;
+            transform: translateX(10px);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .project-title {
+            font-size: 1.8rem;
+            color: #00ff41;
+            margin-bottom: 10px;
+        }
+
+        .project-status {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .project-description {
+            color: #c9d1d9;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .project-features {
+            background: rgba(88, 166, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 3px solid #58a6ff;
+        }
+
+        .project-features ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .project-features li {
+            color: #8b949e;
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .project-features li::before {
+            content: '▹';
+            color: #00ff41;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tech-badge {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid #58a6ff;
+            color: #58a6ff;
+            padding: 6px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            background: transparent;
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #00ff41;
+            color: #0a0e27;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        .btn-secondary {
+            border-color: #58a6ff;
+            color: #58a6ff;
+        }
+
+        .btn-secondary:hover {
+            background: #58a6ff;
+            color: #0a0e27;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
+        }
+
+        /* Code Stats */
+        .stats-section {
+            margin: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #1a1f3a, #0d1117);
+            border: 1px solid #30363d;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: #00ff41;
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            color: #00ff41;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #8b949e;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            background: rgba(88, 166, 255, 0.1);
+            border: 2px solid #58a6ff;
+            color: #58a6ff;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .contact-link:hover {
+            background: #58a6ff;
+            color: #0a0e27;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(88, 166, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #0d1117;
+            border-top: 2px solid #30363d;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer p {
+            color: #8b949e;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #58a6ff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00ff41;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .skills-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-header">
+        <div class="container">
+            <div class="terminal-window">
+                <div class="terminal-bar">
+                    <div class="terminal-dot dot-red"></div>
+                    <div class="terminal-dot dot-yellow"></div>
+                    <div class="terminal-dot dot-green"></div>
+                </div>
+                <div class="terminal-content">
+                    <div>
+                        <span class="prompt">$</span>
+                        <span class="command">whoami</span>
+                    </div>
+                    <div class="output">
+                        <h1>Python Developer</h1>
+                        <p class="tagline">Building automation tools & solving real-world problems with code</p>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <span class="prompt">$</span>
+                        <span class="command">cat skills.txt</span>
+                        <span class="cursor"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Skills Section -->
+        <section class="skills-section">
+            <h2 class="section-title">// Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🐍</div>
+                    <h3>Python Core</h3>
+                    <p>Strong foundation in Python programming with focus on clean, efficient code</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">OOP</span>
+                        <span class="skill-tag">Functions</span>
+                        <span class="skill-tag">Data Structures</span>
+                        <span class="skill-tag">Exception Handling</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h3>Web Development</h3>
+                    <p>Full-stack development with Flask, HTML, CSS for complete web applications</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">Frontend</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🔌</div>
+                    <h3>API Development</h3>
+                    <p>Building and consuming REST APIs with proper endpoint design</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">REST API</span>
+                        <span class="skill-tag">Requests</span>
+                        <span class="skill-tag">JSON</span>
+                        <span class="skill-tag">HTTP Methods</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3>Data Processing</h3>
+                    <p>Parsing, analyzing, and presenting data in meaningful ways</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">Data Extraction</span>
+                        <span class="skill-tag">Formatting</span>
+                        <span class="skill-tag">Analysis</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <h3>Automation</h3>
+                    <p>Creating scripts and tools to automate repetitive tasks</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">CLI Tools</span>
+                        <span class="skill-tag">Task Scripts</span>
+                        <span class="skill-tag">Workflows</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">📁</div>
+                    <h3>File Handling</h3>
+                    <p>Reading, writing, and processing various file formats</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">CSV</span>
+                        <span class="skill-tag">JSON</span>
+                        <span class="skill-tag">Text Files</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🔧</div>
+                    <h3>Development Tools</h3>
+                    <p>Version control and collaborative development</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">VS Code</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects-section">
+            <h2 class="section-title">// Featured Projects</h2>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">💼 AI Career Coach</h3>
+                    </div>
+                    <span class="project-status">Active</span>
+                </div>
+
+                <p class="project-description">
+                    A web application that provides personalized career advice, interview tips, and coding challenges. Features a chat-like interface with motivational quotes and a vibrant, user-friendly design.
+                </p>
+
+                <div class="project-features">
+                    <strong style="color: #58a6ff;">Key Features:</strong>
+                    <ul>
+                        <li>Personalized career guidance and interview preparation</li>
+                        <li>Interactive coding challenges for skill improvement</li>
+                        <li>Chat-like interface for natural interaction</li>
+                        <li>Motivational quotes system for user engagement</li>
+                        <li>Full-stack web application with Flask backend</li>
+                    </ul>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Flask</span>
+                    <span class="tech-badge">HTML</span>
+                    <span class="tech-badge">CSS</span>
+                    <span class="tech-badge">Web Development</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="https://github.com/amuthaluri/ai-career-coach" class="btn" target="_blank">View Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">👕 Sasha Store</h3>
+                    </div>
+                    <span class="project-status">Active</span>
+                </div>
+
+                <p class="project-description">
+                    A full-featured e-commerce web application for a clothing store. Built with Python to handle product management, shopping cart functionality, and user interactions.
+                </p>
+
+                <div class="project-features">
+                    <strong style="color: #58a6ff;">Key Features:</strong>
+                    <ul>
+                        <li>Product catalog with detailed item information</li>
+                        <li>Shopping cart and checkout functionality</li>
+                        <li>User-friendly interface for browsing products</li>
+                        <li>Backend logic for inventory management</li>
+                    </ul>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Web Development</span>
+                    <span class="tech-badge">E-commerce</span>
+                    <span class="tech-badge">Database</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="https://github.com/amuthaluri/sasha-store" class="btn" target="_blank">View Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">☕ Cafe API</h3>
+                    </div>
+                    <span class="project-status">Active</span>
+                </div>
+
+                <p class="project-description">
+                    A RESTful API built with Python for managing cafe data. Demonstrates backend development skills with proper API endpoints, data handling, and HTTP methods.
+                </p>
+
+                <div class="project-features">
+                    <strong style="color: #58a6ff;">Key Features:</strong>
+                    <ul>
+                        <li>RESTful API design with CRUD operations</li>
+                        <li>Endpoint management for cafe information</li>
+                        <li>Proper HTTP method implementation (GET, POST, PUT, DELETE)</li>
+                        <li>Data validation and error handling</li>
+                    </ul>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">REST API</span>
+                    <span class="tech-badge">Backend</span>
+                    <span class="tech-badge">Flask</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="https://github.com/amuthaluri/cafe-api" class="btn" target="_blank">View Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">🥗 Nutrition Analyzer</h3>
+                    </div>
+                    <span class="project-status">New</span>
+                </div>
+
+                <p class="project-description">
+                    A practical Python automation tool that helps users make informed dietary choices by fetching real-time nutritional data from USDA's database and comparing multiple foods side-by-side.
+                </p>
+
+                <div class="project-features">
+                    <strong style="color: #58a6ff;">Key Features:</strong>
+                    <ul>
+                        <li>Real-time data fetching from USDA FoodData Central API</li>
+                        <li>Compare unlimited foods with detailed nutritional breakdown</li>
+                        <li>Smart insights showing highest protein, fiber, lowest calories</li>
+                        <li>Clean CLI interface with intuitive commands</li>
+                        <li>Efficient error handling and input validation</li>
+                    </ul>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">Python 3.x</span>
+                    <span class="tech-badge">Requests Library</span>
+                    <span class="tech-badge">REST API</span>
+                    <span class="tech-badge">Data Processing</span>
+                    <span class="tech-badge">CLI Design</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="https://github.com/amuthaluri/nutrition-analyzer" class="btn" target="_blank">View Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">🎬 My Top 10 Movies Website</h3>
+                    </div>
+                    <span class="project-status">Complete</span>
+                </div>
+
+                <p class="project-description">
+                    A stylish web application to showcase and manage a personal top 10 movies list. Demonstrates frontend development skills with CSS styling and responsive design.
+                </p>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">HTML</span>
+                    <span class="tech-badge">CSS</span>
+                    <span class="tech-badge">Frontend</span>
+                    <span class="tech-badge">Responsive Design</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="https://github.com/amuthaluri/My-top10-movies-website" class="btn" target="_blank">View Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">📝 Upgraded Blog</h3>
+                    </div>
+                    <span class="project-status">Complete</span>
+                </div>
+
+                <p class="project-description">
+                    An enhanced blogging platform with improved features and design. Built with HTML and modern web technologies.
+                </p>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">HTML</span>
+                    <span class="tech-badge">Web Development</span>
+                    <span class="tech-badge">Frontend</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="https://github.com/amuthaluri/Upgraded-blog" class="btn" target="_blank">View Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">🏃 Tracking Exercises</h3>
+                    </div>
+                    <span class="project-status">Complete</span>
+                </div>
+
+                <p class="project-description">
+                    A Python application for tracking fitness exercises and workout data. Helps users monitor their fitness journey and progress.
+                </p>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Data Tracking</span>
+                    <span class="tech-badge">Automation</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="https://github.com/amuthaluri/Tracking-Exercises" class="btn" target="_blank">View Code</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <h2 class="section-title">// GitHub Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3000+</div>
+                    <div class="stat-label">Lines of Code</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Commits</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Python</div>
+                    <div class="stat-label">Primary Language</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <h2 class="section-title">// Get In Touch</h2>
+            <p style="color: #8b949e; font-size: 1.1rem; margin-bottom: 30px;">
+                Open to collaboration and new opportunities. Let's build something awesome!
+            </p>
+            <div class="contact-grid">
+                <a href="https://github.com/amuthaluri" class="contact-link" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/anusha-muthaluri-094526217" class="contact-link" target="_blank">LinkedIn</a>
+                <a href="mailto:amuthaluri@gmail.com" class="contact-link">Email</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Python Developer Portfolio | Built with HTML, CSS & passion for automation</p>
+            <div class="footer-links">
+                <a href="#top">Back to Top</a>
+                <a href="https://github.com/amuthaluri" target="_blank">GitHub Profile</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Update stats dynamically (you can connect this to GitHub API later)
+        setTimeout(() => {
+            document.querySelectorAll('.stat-number').forEach(stat => {
+                if (!isNaN(parseInt(stat.textContent))) {
+                    const target = parseInt(stat.textContent);
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            stat.textContent = target + '+';
+                            clearInterval(timer);
+                        } else {
+                            stat.textContent = Math.floor(current) + '+';
+                        }
+                    }, 20);
+                }
+            });
+        }, 500);
+    </script>
+</body>
+</html>
